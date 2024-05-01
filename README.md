@@ -16,18 +16,10 @@ This project has two main folders:
 
 ```bash
 .
-├── contracts
-│   ├── src
-│   ├── broadcast
-│   ├── script
-│   └── test
 └── web
     ├── app
     └── src
 ```
-
-
-[contracts](/contracts/README.md) folder contains all the solidity code (*Currently not used*) 
 
 [web](/web/README.md) folder contains all the frontend code
 
@@ -48,6 +40,11 @@ SIGN_BOT_PRIVATE_KEY=
 # This bot is used to post attestations on Farcaster, FID and Key should match
 FARCASTER_BOT_FID=
 FARCASTER_BOT_PRIVATE_KEY=
+NEXT_PUBLIC_SIGN_PROTOCOL_SCHEMA_ID_FARCASTER=
+NEXT_PUBLIC_REACT_NEYNAR_API_KEY=
+NEXT_PUBLIC_SIGN_SCAN_URL=
+NEXT_PUBLIC_SIGN_SCAN_API_URL=
+NEXT_PUBLIC_WEBSITE_URL=
 ```
 
 #### Step 3: Install and Run your onchain app
