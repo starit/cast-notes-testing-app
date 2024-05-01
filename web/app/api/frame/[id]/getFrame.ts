@@ -56,7 +56,7 @@ export async function getFrame0(id: string) {
         aspectRatio: '1:1',
       },
       postUrl: ATTESTATION_CASTER_URL + `/api/frame/${id}/0`,
-      ogTitle: 'AttestCaster - Initial Frame - Attestation' + id,
+      ogTitle: 'CastNotes - Initial Frame - Attestation' + id,
       ogDescription: 'Original cast and context of attestation ' + { id },
     }),
   );
@@ -93,7 +93,7 @@ export async function getFrame1(id: string) {
         aspectRatio: '1:1',
       },
       postUrl: ATTESTATION_CASTER_URL + `/api/frame/${id}/1`,
-      ogTitle: 'AttestCaster - Second Frame - Attestation' + id,
+      ogTitle: 'CastNotes - Second Frame - Attestation' + id,
       ogDescription: 'Reference 1 and reference 2 of attestation ' + { id },
     }),
   );
@@ -126,7 +126,7 @@ export async function getFrame2(id: string) {
         aspectRatio: '1:1',
       },
       postUrl: ATTESTATION_CASTER_URL + `/api/frame/${id}/2`,
-      ogTitle: 'AttestCaster - Third Frame - Attestation' + id,
+      ogTitle: 'CastNotes - Third Frame - Attestation' + id,
       ogDescription: 'Reference 3 and reference 4 of attestation ' + { id },
     }),
   );
@@ -149,7 +149,7 @@ export async function getFrame3(id: string) {
           target: SIGN_SCAN_URL + '/' + id,
         },
         {
-          label: 'AttestCaster',
+          label: 'CastNotes',
           action: 'link',
           target: ATTESTATION_CASTER_URL,
         },
@@ -159,8 +159,8 @@ export async function getFrame3(id: string) {
         aspectRatio: '1:1',
       },
       postUrl: ATTESTATION_CASTER_URL + `/api/frame/${id}/3`,
-      ogTitle: 'AttestCaster - Info Frame - Attestation' + id,
-      ogDescription: 'Info about AttestCaster',
+      ogTitle: 'CastNotes - Info Frame - Attestation' + id,
+      ogDescription: 'Info about CastNotes',
     }),
   );
 }

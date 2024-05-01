@@ -20,9 +20,9 @@ export default function Footer() {
                 passHref
                 className="font-robotoMono text-center text-xl font-medium text-white no-underline"
               >
-                AttestCaster
+                CastNotes
               </NextLink>
-              <NavbarLink href="https://github.com/AttestCaster/" target="_blank">
+              <NavbarLink href="https://github.com/CastNotes/" target="_blank">
                 <GitHubLogoIcon
                   width="24"
                   height="24"

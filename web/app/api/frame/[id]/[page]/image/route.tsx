@@ -170,9 +170,9 @@ async function getNode(id: string, page: number) {
             textAlign: 'justify',
           }}
         >
-          <span>This cast-check is an attestation issued on Sign Protocol using AttestCaster</span>
+          <span>This cast-check is an attestation issued on Sign Protocol using CastNotes</span>
           <hr style={{ width: '90%', border: '1px solid grey' }}></hr>
-          <span>AttestCaster is a Farcaster x Sign Protocol client built by {team_names}</span>
+          <span>CastNotes is a Farcaster x Sign Protocol client built by {team_names}</span>
           <hr style={{ width: '90%', border: '1px solid grey' }}></hr>
           <span>Click Attestation Info for more details</span>
         </div>

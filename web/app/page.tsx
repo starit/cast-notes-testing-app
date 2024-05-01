@@ -2,7 +2,7 @@ import { generateMetadata } from '@/utils/generateMetadata';
 import HomePage from './home/HomePage';
 
 export const metadata = generateMetadata({
-  title: 'AttestCaster - Attest your cast',
+  title: 'CastNotes - Attest your cast',
   description:
     'Attest farcaster\'s cast with Sign Protocol',
   images: 'themes.png',

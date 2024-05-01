@@ -40,7 +40,7 @@ export function NavbarTitle() {
         className="font-robotoMono text-center text-xl font-medium text-white no-underline"
         aria-label="build-onchain-apps Github repository"
       >
-        AttestCaster
+        CastNotes
       </NextLink>
     </div>
   );
@@ -59,7 +59,7 @@ function Navbar() {
         <div className="flex items-center justify-start gap-8">
           <ul className="hidden items-center justify-start gap-8 md:flex">
             <li className="flex">
-              <NavbarLink href="https://github.com/AttestCaster/" target="_blank">
+              <NavbarLink href="https://github.com/CastNotes/" target="_blank">
                 <GitHubLogoIcon
                   width="24"
                   height="24"

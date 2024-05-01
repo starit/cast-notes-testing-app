@@ -1,8 +1,8 @@
-# AttestCaster App
+# CastNotes App
 
-This repo is the front end of AttestCaster App.
+This repo is the front end of CastNotes App.
 
-AttestCaster is a simple solution for issuing and managing attestations in the form of a client application for Farcaster, the leading decentralised social network protocol in the world.
+CastNotes is a simple solution for issuing and managing attestations in the form of a client application for Farcaster, the leading decentralised social network protocol in the world.
 
 By building this solution in the form of a Farcaster client, users will be able to:
 
