@@ -4,6 +4,7 @@ import { clsx } from 'clsx';
 import NextLink from 'next/link';
 import AccountConnect from './AccountConnect';
 import { Experiences } from './Experiences';
+import FarcasterLogin from './FarcasterLogin';
 
 export function NavbarLink({
   href,
@@ -76,7 +77,7 @@ function Navbar() {
                   <NavigationMenu.Item>
                     <NavigationMenu.Trigger className="group flex h-16 items-center justify-start gap-1">
                       <span className="font-robotoMono text-center text-base font-normal text-white">
-                        Experiences
+                        History
                       </span>
                       <ChevronDownIcon
                         className="transform transition duration-200 ease-in-out group-data-[state=open]:rotate-180"
@@ -104,6 +105,7 @@ function Navbar() {
             </li>
           </ul>
           <AccountConnect />
+          <FarcasterLogin />
         </div>
       </div>
     </nav>

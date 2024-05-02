@@ -4,6 +4,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
+import { useState } from 'react';
 import { NeynarAPIClient, isApiErrorResponse, CastParamType } from '@neynar/nodejs-sdk';
 import { clsx } from 'clsx';
 import Button from '@/components/Button/Button';
@@ -13,7 +14,6 @@ import Header from '@/components/layout/header/Header';
 import styles from './Home.module.css';
 import InputText from './InputText';
 import Label from './Label';
-import { useState } from 'react';
 
 // API can be used: https://docs.neynar.com/reference/cast
 const getCastByURL = async (url: string) => {
