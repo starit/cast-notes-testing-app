@@ -7,7 +7,7 @@
 import React, { useState, useCallback } from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { SignProtocolClient, SpMode, OffChainSignType, OffChainRpc } from '@ethsign/sp-sdk';
-import InputCheckbox from 'app/home/_components/InputCheckbox';
+// import InputCheckbox from 'app/home/_components/InputCheckbox';
 import InputText from 'app/home/_components/InputText';
 import { useAccount } from 'wagmi';
 import Button from '@/components/Button/Button';
@@ -33,6 +33,10 @@ export default function Main(props: any) {
       setError('Please connect to the wallet first');
       return;
     }
+    if (!props.isAuthenticated || !props.profile.fid) {
+      setError('Please login to farcaster first');
+      return;
+    }
     setDisabled(true);
     setError(''); // Clear previous errors
     const client = new SignProtocolClient(SpMode.OffChain, {
@@ -49,8 +53,8 @@ export default function Main(props: any) {
       const data = {
         castURL: props.castURL,
         castHash: props.castHash,
-        castAuthorFID: props.castFID,
-        attesterFID: 0,
+        castAuthorFID: props.castFID as number,
+        attesterFID: props.profile.fid as number,
         isFactCheck, // bool
         context: comment,
         reference1,

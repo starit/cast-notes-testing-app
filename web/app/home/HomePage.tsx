@@ -19,10 +19,10 @@ import '@farcaster/auth-kit/styles.css';
  */
 const config = {
   rpcUrl: 'https://mainnet.optimism.io',
-  domain: 'example.com',
-  siweUri: 'https://example.com/login',
+  domain: 'CastNotes.xyz',
+  siweUri: process.env.NEXT_PUBLIC_WEBSITE_URL as string + '/login',
 };
-
+// console.log('process.env.NEXT_PUBLIC_WEBSITE_URL', process.env.NEXT_PUBLIC_WEBSITE_URL)
 
 export default function HomePage() {
   const [cast, setCast] = useState("")
