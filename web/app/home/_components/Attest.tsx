@@ -11,7 +11,7 @@ import { SignProtocolClient, SpMode, OffChainSignType, OffChainRpc } from '@eths
 import InputText from 'app/home/_components/InputText';
 import { useAccount } from 'wagmi';
 import Button from '@/components/Button/Button';
-import InputRadiobox from './_components/InputRadiobox';
+import InputRadiobox from './InputRadiobox';
 
 export default function Main(props: any) {
   const [comment, setComment] = useState('');
@@ -33,6 +33,7 @@ export default function Main(props: any) {
       setError('Please connect to the wallet first');
       return;
     }
+    console.log('props', props)
     if (!props.isAuthenticated || !props.profile.fid) {
       setError('Please login to farcaster first');
       return;

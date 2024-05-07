@@ -1,10 +1,13 @@
 'use client';
 
 import { ReactNode } from 'react';
+import { AuthKitProvider } from '@farcaster/auth-kit';
 import { RainbowKitProvider, darkTheme, lightTheme } from '@rainbow-me/rainbowkit';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { WagmiProvider } from 'wagmi';
 import { createWagmiConfig } from '@/store/createWagmiConfig';
+import '@farcaster/auth-kit/styles.css';
+
 
 type Props = { children: ReactNode };
 
@@ -21,6 +24,15 @@ if (!projectId) {
 const wagmiConfig = createWagmiConfig(projectId);
 
 /**
+ * Todo:: modify the config before the final launch
+ */
+const authKitConfig = {
+  rpcUrl: 'https://mainnet.optimism.io',
+  domain: 'CastNotes.xyz',
+  siweUri: process.env.NEXT_PUBLIC_WEBSITE_URL as string + '/login',
+};
+
+/**
  * TODO Docs ~~~
  */
 function OnchainProviders({ children }: Props) {
@@ -33,7 +45,9 @@ function OnchainProviders({ children }: Props) {
             darkMode: darkTheme(),
           }}
         >
-          {children}
+          <AuthKitProvider config={authKitConfig}>
+            {children}
+          </AuthKitProvider>
         </RainbowKitProvider>
       </QueryClientProvider>
     </WagmiProvider>
