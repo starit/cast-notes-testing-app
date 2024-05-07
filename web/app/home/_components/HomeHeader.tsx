@@ -16,6 +16,7 @@ import InputText from './InputText';
 import Label from './Label';
 
 // API can be used: https://docs.neynar.com/reference/cast
+// Alternative API: https://github.com/pugson/react-farcaster-embed/blob/main/src/api.ts
 const getCastByURL = async (url: string) => {
   // validate URL
   const client = new NeynarAPIClient(`${process.env.NEXT_PUBLIC_REACT_NEYNAR_API_KEY}`); // Replace with your Neynar API Key.

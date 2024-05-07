@@ -1,4 +1,6 @@
 import './global.css';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import "react-farcaster-embed/dist/styles.css";
 
 import GoogleAnalytics from '@/components/GoogleAnalytics/GoogleAnalytics';
 import OnchainProviders from '@/OnchainProviders';

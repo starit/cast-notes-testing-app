@@ -12,8 +12,9 @@ import InputText from 'app/home/_components/InputText';
 import { useAccount } from 'wagmi';
 import Button from '@/components/Button/Button';
 import InputRadiobox from './InputRadiobox';
+import { FarcasterEmbed } from "react-farcaster-embed/dist/client";
 
-export default function Main(props: any) {
+export default function Attest(props: any) {
   const [comment, setComment] = useState('');
   const [isFactCheck, setIsFactCheck] = useState(false);
 
@@ -101,7 +102,8 @@ export default function Main(props: any) {
   // Todo:: validate the value
   return (
     <div className="container mx-auto flex flex-col gap-8 px-8 py-6">
-      <p style={{ whiteSpace: 'pre-line' }}>{props.cast}</p>
+      {/* <p style={{ whiteSpace: 'pre-line' }}>{props.cast}</p> */}
+      <FarcasterEmbed url={props.castURL} />
       <InputText
         id="comment_content"
         placeholder="Input comment here(optional)"
