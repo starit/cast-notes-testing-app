@@ -8,7 +8,7 @@ export default function useGuideScroll() {
 
     function handleScroll() {
       const pageYOffset = window.scrollY;
-      let newActiveSectionId = null;
+      let newActiveSectionId: string | null = null;
 
       window.document.querySelectorAll('section[id]').forEach((section) => {
         const sectionOffsetTop = (section as HTMLElement).offsetTop;
