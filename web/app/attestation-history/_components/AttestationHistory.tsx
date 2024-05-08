@@ -13,7 +13,7 @@ export default function AttestationHistory({ historyRows }: Props) {
   if (historyRows.length === 0) {
     return <></>
   }
-  const rows = []
+  const rows: any[] = []
     
   const tdClass = clsx([
     'border border-slate-300',
