@@ -103,6 +103,7 @@ export default function Attest(props: any) {
   return (
     <div className="container mx-auto flex flex-col gap-8 px-8 py-6">
       {/* <p style={{ whiteSpace: 'pre-line' }}>{props.cast}</p> */}
+      {/* Todo:: use display-only component. This component will fetch the data again */}
       <FarcasterEmbed url={props.castURL} />
       <InputText
         id="comment_content"
