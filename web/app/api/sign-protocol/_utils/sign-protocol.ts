@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   SignProtocolClient,
   SpMode,
+  EvmChains,
   OffChainSignType,
   IndexService,
   OffChainRpc,
@@ -44,10 +46,11 @@ export async function createAttestationForCast(
   reference3: string,
   reference4: string,
 ) {
-  const client = new SignProtocolClient(SpMode.OffChain, {
-    signType: OffChainSignType.EvmEip712,
-    rpcUrl: OffChainRpc.testnet,
+  const client = new SignProtocolClient(SpMode.OnChain, {
+    chain: EvmChains.base,
   });
+  // signType: OffChainSignType.EvmEip712,
+  //   rpcUrl: OffChainRpc.testnet,
   const res = await client.createAttestation({
     schemaId: process.env.NEXT_PUBLIC_SIGN_PROTOCOL_SCHEMA_ID_FARCASTER as string, //
     data: { castURL, castHash, castAuthorFID, attesterFID, attesterComment, isFactCheck, reference1, reference2, reference3, reference4 },

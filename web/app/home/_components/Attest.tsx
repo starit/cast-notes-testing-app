@@ -6,13 +6,13 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import React, { useState, useCallback } from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { SignProtocolClient, SpMode, OffChainSignType, OffChainRpc } from '@ethsign/sp-sdk';
+import { SignProtocolClient, SpMode, EvmChains, OffChainSignType, OffChainRpc } from '@ethsign/sp-sdk';
 // import InputCheckbox from 'app/home/_components/InputCheckbox';
 import InputText from 'app/home/_components/InputText';
+import { FarcasterEmbed } from "react-farcaster-embed/dist/client";
 import { useAccount } from 'wagmi';
 import Button from '@/components/Button/Button';
 import InputRadiobox from './InputRadiobox';
-import { FarcasterEmbed } from "react-farcaster-embed/dist/client";
 
 export default function Attest(props: any) {
   const [comment, setComment] = useState('');
@@ -29,7 +29,8 @@ export default function Attest(props: any) {
   const [error, setError] = useState(''); // State for holding error messages
   const { isConnected, address } = useAccount();
 
-  const attest = useCallback(async () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const attestOffchain = useCallback(async () => {
     if (!isConnected || !address) {
       setError('Please connect to the wallet first');
       return;
@@ -49,6 +50,72 @@ export default function Attest(props: any) {
       // account: privateKeyToAccount(privateKey), // optional
     });
     const schemaId = `${process.env.NEXT_PUBLIC_SIGN_PROTOCOL_SCHEMA_ID_FARCASTER}`;
+    console.log('schemaId', schemaId);
+    console.log('process env', process.env);
+    try {
+      const data = {
+        castURL: props.castURL,
+        castHash: props.castHash,
+        castAuthorFID: props.castFID as number,
+        attesterFID: props.profile.fid as number,
+        isFactCheck, // bool
+        context: comment,
+        reference1,
+        reference2,
+        reference3,
+        reference4,
+      };
+      console.log('props', props);
+      console.log('attest data', data);
+      const result = await client.createAttestation({
+        schemaId,
+        data,
+        indexingValue: 'xxx',
+      });
+      console.log('attest result', result);
+      setDisabled(false);
+      setAttestResult(result.attestationId);
+      setHiddenResult(false);
+      // return result
+    } catch (e) {
+      setDisabled(false);
+      setError('An error occurred while creating the attestation. Please try again.'); // Set error message
+      console.error(e);
+      // return
+    }
+  }, [
+    isConnected,
+    address,
+    props,
+    isFactCheck,
+    comment,
+    reference1,
+    reference2,
+    reference3,
+    reference4,
+  ]);
+
+  const attest = useCallback(async () => {
+    if (!isConnected || !address) {
+      setError('Please connect to the wallet first');
+      return;
+    }
+    console.log('props', props)
+    if (!props.isAuthenticated || !props.profile.fid) {
+      setError('Please login to farcaster first');
+      return;
+    }
+    setDisabled(true);
+    setError(''); // Clear previous errors
+    const client = new SignProtocolClient(SpMode.OnChain, {
+      chain: EvmChains.base,
+      // signType: OffChainSignType.EvmEip712,
+      // // signType: OffChainSignType["evm-eip712"],
+      // rpcUrl: OffChainRpc.testnet,
+      // account: props.account
+      // account: privateKeyToAccount(privateKey), // optional
+    });
+    const schemaId = `${process.env.NEXT_PUBLIC_SIGN_PROTOCOL_BASE_SCHEMA_ID_FARCASTER}`;
     console.log('schemaId', schemaId);
     console.log('process env', process.env);
     try {

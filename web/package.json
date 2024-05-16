@@ -20,7 +20,7 @@
   "dependencies": {
     "@coinbase/onchainkit": "0.10.0",
     "@coinbase/wallet-sdk": "^3.9.1",
-    "@ethsign/sp-sdk": "^0.3.23",
+    "@ethsign/sp-sdk": "^0.3.30",
     "@farcaster/auth-kit": "^0.2.2",
     "@farcaster/hub-nodejs": "^0.11.8",
     "@neynar/nodejs-sdk": "^1.16.1",

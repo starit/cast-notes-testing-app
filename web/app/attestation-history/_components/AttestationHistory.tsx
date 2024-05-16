@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-no-useless-fragment */
 import { clsx } from 'clsx';
+import { decodeAbiParameters } from 'viem'
 import { HistoryRecord } from '../page'
 
 type Props = {
@@ -14,6 +15,11 @@ export default function AttestationHistory({ historyRows }: Props) {
     return <></>
   }
   const rows: any[] = []
+
+
+  const parseOnchaindata = (row) => {
+    return decodeAbiParameters(row.schema.data, row.data as `0x${string}`) as object
+  }
     
   const tdClass = clsx([
     'border border-slate-300',
@@ -22,8 +28,10 @@ export default function AttestationHistory({ historyRows }: Props) {
 
   if (historyRows.length !== 0) {
     for (const row of historyRows) {
+      console.log('row', row, typeof row)
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-argument
-      const data = JSON.parse(row.data)
+      const data = parseOnchaindata(row)
+      console.log('parsed data', data)
       
       rows.push((<tr>
         <td className={tdClass}>
@@ -35,11 +43,15 @@ export default function AttestationHistory({ historyRows }: Props) {
         {/* <td className={tdClass}>{row.schemaId}</td> */}
         {/* <td className={tdClass}>{row.attester}</td> */}
         {/* <td className={tdClass}>{data.attesterFID}</td> */}
-        <td className={tdClass}>{data.context}</td>
+
+        {/* context */}
+        <td className={tdClass}>{data[5]}</td>
+        {/* castHash */}
         <td className={tdClass}>
-          <code className="text-sm">{data.castHash}</code>
+          <code className="text-sm">{data[1]}</code>
         </td>
-        <td className={tdClass}>{data.castAuthorFID}</td>
+        {/* castAuthorFID */}
+        <td className={tdClass}>{(data[2] as bigint).toString(10)}</td>
         <td className={tdClass}><a href={`${process.env.NEXT_PUBLIC_WEBSITE_URL}/api/frame/${row.id}/0`}>Frame Link</a></td>
       </tr>))
     }

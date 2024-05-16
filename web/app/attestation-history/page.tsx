@@ -42,9 +42,15 @@ export default function AttestationHistoryPage() {
     // });
     if (!address) return
 
-    const indexService = new IndexService("testnet");
+    const indexService = new IndexService("mainnet");
 
-    const schemaId = `${process.env.NEXT_PUBLIC_SIGN_PROTOCOL_SCHEMA_ID_FARCASTER}`
+    // offchain
+    // const schemaId = `${process.env.NEXT_PUBLIC_SIGN_PROTOCOL_SCHEMA_ID_FARCASTER}`
+    // onchain
+    // const schemaId = `${process.env.NEXT_PUBLIC_SIGN_PROTOCOL_BASE_SCHEMA_ID_FARCASTER}`
+    const schemaId = 'onchain_evm_8453_0x22'
+    console.log('schemaId', schemaId)
+
     try {
       const page = 1
       const result = await indexService.queryAttestationList({
