@@ -1,12 +1,18 @@
 import { FrameRequest } from '@coinbase/onchainkit/frame';
 import { NextRequest } from 'next/server';
-import { getFrame0, getFrame1, getFrame2, getFrame3 } from '../getFrame';
+import { getFrame0, getFrame1, getFrame2, getFrame3, getFrameError } from '../getFrame';
 
 export async function GET(
   req: NextRequest,
   { params }: { params: { id: string; page: number } },
 ): Promise<Response> {
-  return await getFrame0(params.id);
+  try {
+    return await getFrame0(params.id);
+  } catch (e) {
+    console.error('Internal Error on request to ', params.id);
+    console.error(e);
+    return await getFrameError();
+  } 
 }
 
 export async function POST(
@@ -17,24 +23,30 @@ export async function POST(
   const id = params.id;
   const button = frameRequest.untrustedData.buttonIndex;
 
-  switch (parseInt(params.page)) {
-    case 0:
-      console.log("case 0");
-      if (button === 1) {
-        return await getFrame1(id);
-      } else {
-        return await getFrame3(id);
-      }
-    case 1:
-      console.log("case 1");
-      if (button === 3) {
-        return await getFrame2(id);
-      } else {
+  try {
+    switch (parseInt(params.page)) {
+      case 0:
+        console.log("case 0");
+        if (button === 1) {
+          return await getFrame1(id);
+        } else {
+          return await getFrame3(id);
+        }
+      case 1:
+        console.log("case 1");
+        if (button === 3) {
+          return await getFrame2(id);
+        } else {
+          return await getFrame0(id);
+        }
+      default:
+        console.log("case default");
         return await getFrame0(id);
-      }
-    default:
-      console.log("case default");
-      return await getFrame0(id);
+    }
+  } catch (e) {
+    console.error('Internal Error on request to ', params.id);
+    console.error(e);
+    return await getFrameError();
   }
 }
 

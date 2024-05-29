@@ -95,7 +95,7 @@ export default function Attest(props: any) {
     reference4,
   ]);
 
-  const attest = useCallback(async () => {
+  const attestOnChain = useCallback(async () => {
     if (!isConnected || !address) {
       setError('Please connect to the wallet first');
       return;
@@ -109,11 +109,6 @@ export default function Attest(props: any) {
     setError(''); // Clear previous errors
     const client = new SignProtocolClient(SpMode.OnChain, {
       chain: EvmChains.base,
-      // signType: OffChainSignType.EvmEip712,
-      // // signType: OffChainSignType["evm-eip712"],
-      // rpcUrl: OffChainRpc.testnet,
-      // account: props.account
-      // account: privateKeyToAccount(privateKey), // optional
     });
     const schemaId = `${process.env.NEXT_PUBLIC_SIGN_PROTOCOL_BASE_SCHEMA_ID_FARCASTER}`;
     console.log('schemaId', schemaId);
@@ -161,6 +156,7 @@ export default function Attest(props: any) {
     reference4,
   ]);
 
+
   if (!props.cast) {
     return null;
   }
@@ -196,8 +192,7 @@ export default function Attest(props: any) {
           setIsFactCheck(evt.target.checked);
         }}
         disabled={false}
-        checked={true}>
-      </InputRadiobox>
+        checked />
       <InputText
         id="reference1"
         placeholder="Input reference1 here(optional)"
@@ -232,7 +227,7 @@ export default function Attest(props: any) {
       />
       <Button
         buttonContent={disabled ? 'Attesting' : 'Attest'}
-        onClick={() => attest()}
+        onClick={() => attestOnChain()}
         disabled={disabled}
       />
       <div hidden={hiddenResult}>

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   SignProtocolClient,
@@ -6,6 +7,7 @@ import {
   OffChainSignType,
   IndexService,
   OffChainRpc,
+  Attestation,
 } from '@ethsign/sp-sdk';
 
 // import { privateKeyToAccount } from "viem/accounts";
@@ -35,33 +37,25 @@ export type AttestationData = {
   };
 
 export async function createAttestationForCast(
-  castURL: string,
-  castHash: string,
-  castAuthorFID: number,
-  attesterFID: number,
-  attesterComment: string,
-  isFactCheck: boolean,
-  reference1: string,
-  reference2: string,
-  reference3: string,
-  reference4: string,
+  info: { attestation: Attestation; delegationSignature; }
 ) {
+  // verify
   const client = new SignProtocolClient(SpMode.OnChain, {
     chain: EvmChains.base,
   });
-  // signType: OffChainSignType.EvmEip712,
-  //   rpcUrl: OffChainRpc.testnet,
-  const res = await client.createAttestation({
-    schemaId: process.env.NEXT_PUBLIC_SIGN_PROTOCOL_SCHEMA_ID_FARCASTER as string, //
-    data: { castURL, castHash, castAuthorFID, attesterFID, attesterComment, isFactCheck, reference1, reference2, reference3, reference4 },
-    indexingValue: 'xxx', //Todo:: handle this
-  });
-  console.log('[createAttestationForCast]', castURL, castHash, castAuthorFID, attesterFID, attesterComment, isFactCheck, reference1, reference2, reference3, reference4 );
-  return res;
+  // Create Attestation On-behalf of the user
+  const delegationCreateAttestationRes = await client.createAttestation(
+    info.attestation,
+    {
+      delegationSignature: info.delegationSignature,
+    }
+  );
+  console.log('[createAttestationForCast]', 'info.attestation', info.attestation, 'delegationSignature', info.delegationSignature);
+  return delegationCreateAttestationRes;
 }
 
 export async function getAttestation(id: string) {
-  const indexService = new IndexService('testnet');
+  const indexService = new IndexService('mainnet');
   const res = await indexService.queryAttestation(id);
   console.log('[attestation]', res);
   return res;

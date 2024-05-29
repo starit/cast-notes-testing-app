@@ -164,3 +164,23 @@ export async function getFrame3(id: string) {
     }),
   );
 }
+
+
+export async function getFrameError() {
+
+  return new NextResponse(
+    getFrameHtmlResponse({
+      buttons: [
+        {
+          label: 'Internal Error',
+        }
+      ],
+      image: {
+        src: 'https://zizzamia.xyz/park-3.png',
+        aspectRatio: '1:1',
+      },
+      ogTitle: 'CastNotes Frame - Internal Error',
+      ogDescription: 'Info about CastNotes'
+    }),
+  );
+}
