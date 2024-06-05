@@ -187,9 +187,7 @@ export async function GET(
   try {
     const id: string = params.id;
     const page: number = parseInt(params.page);
-    console.log(1);
-    const node=await getNode(id, page);
-    console.log("Get Node Done");
+    const node = await getNode(id, page);
     const svg = await satori(node, {
       width: 600,
       height: 600,
@@ -202,10 +200,8 @@ export async function GET(
         },
       ],
     });
-    console.log(2);
     // Convert SVG to PNG using Sharp
     const pngBuffer = await sharp(Buffer.from(svg)).toFormat('png').toBuffer();
-    console.log(3);
 
     // Set the content type to PNG and send the response
     return new Response(pngBuffer, {
