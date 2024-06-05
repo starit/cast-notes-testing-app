@@ -6,10 +6,16 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import React, { useState, useCallback } from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { SignProtocolClient, SpMode, EvmChains, OffChainSignType, OffChainRpc } from '@ethsign/sp-sdk';
+import {
+  SignProtocolClient,
+  SpMode,
+  EvmChains,
+  OffChainSignType,
+  OffChainRpc,
+} from '@ethsign/sp-sdk';
 // import InputCheckbox from 'app/home/_components/InputCheckbox';
 import InputText from 'app/home/_components/InputText';
-import { FarcasterEmbed } from "react-farcaster-embed/dist/client";
+import { FarcasterEmbed } from 'react-farcaster-embed/dist/client';
 import { useAccount } from 'wagmi';
 import Button from '@/components/Button/Button';
 import InputRadiobox from './InputRadiobox';
@@ -35,7 +41,7 @@ export default function Attest(props: any) {
       setError('Please connect to the wallet first');
       return;
     }
-    console.log('props', props)
+    console.log('props', props);
     if (!props.isAuthenticated || !props.profile.fid) {
       setError('Please login to farcaster first');
       return;
@@ -100,7 +106,7 @@ export default function Attest(props: any) {
       setError('Please connect to the wallet first');
       return;
     }
-    console.log('props', props)
+    console.log('props', props);
     if (!props.isAuthenticated || !props.profile.fid) {
       setError('Please login to farcaster first');
       return;
@@ -192,7 +198,8 @@ export default function Attest(props: any) {
           setIsFactCheck(evt.target.checked);
         }}
         disabled={false}
-        checked />
+        checked={true}
+      ></InputRadiobox>
       <InputText
         id="reference1"
         placeholder="Input reference1 here(optional)"
@@ -245,11 +252,25 @@ export default function Attest(props: any) {
         <p>
           Use this link to share in Farcaster with Farcaster Frame:{' '}
           <a target="_blank" href={'/api/frame/' + attestResult + '/0'}>
-            {`${process.env.NEXT_PUBLIC_WEBSITE_URL}/api/frame/` + attestResult + '/0'}
+            {getFrameUrl(attestResult)}
+          </a>
+        </p>
+        <p>
+          Share to
+          <a target="_blank" href={getWarpcastShareUrl(attestResult)}>
+            Warpcast
           </a>
         </p>
       </div>
       {error && <p className="text-red-500">{error}</p>} {/* Display error messages */}
     </div>
   );
+}
+
+function getFrameUrl(attestId: string) {
+  return `${process.env.NEXT_PUBLIC_WEBSITE_URL}/api/frame/` + attestId + '/0';
+}
+
+function getWarpcastShareUrl(attestId: string) {
+  return `https://warpcast.com/~/compose?embeds[]=${getFrameUrl(attestId)}`;
 }

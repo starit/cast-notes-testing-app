@@ -122,6 +122,7 @@
   "packageManager": "yarn@4.1.0",
   "os": [
     "darwin",
-    "linux"
+    "linux",
+    "win32"
   ]
 }
