@@ -26,8 +26,8 @@ export function createWagmiConfig(projectId: string) {
     ssr: true,
     chains: getChainsForEnvironment(),
     transports: {
-      [baseSepolia.id]: http(),
       [base.id]: http(),
+      [baseSepolia.id]: http(),
     },
     connectors,
   });

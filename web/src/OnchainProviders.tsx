@@ -27,7 +27,7 @@ const wagmiConfig = createWagmiConfig(projectId);
  * Todo:: modify the config before the final launch
  */
 const authKitConfig = {
-  rpcUrl: 'https://mainnet.optimism.io',
+  rpcUrl: 'https://base.llamarpc.com',
   domain: 'CastNotes.xyz',
   siweUri: process.env.NEXT_PUBLIC_WEBSITE_URL as string + '/login',
 };

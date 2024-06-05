@@ -5,10 +5,10 @@ import { Environment, getCurrentEnvironment } from './environment';
 // The list of supported Chains for a given environment
 // https://github.com/wevm/viem/blob/main/src/chains/index.ts
 export const SUPPORTED_CHAINS: Record<Environment, [Chain, ...Chain[]]> = {
-  [Environment.localhost]: [mainnet, base, baseSepolia],
+  [Environment.localhost]: [base, baseSepolia],
   [Environment.development]: [baseSepolia],
-  [Environment.staging]: [base, baseSepolia],
-  [Environment.production]: [mainnet, base],
+  [Environment.staging]: [base],
+  [Environment.production]: [base],
 };
 
 /**
