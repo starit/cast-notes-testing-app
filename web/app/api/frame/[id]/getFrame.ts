@@ -6,6 +6,7 @@ import { getCast } from 'app/api/farcaster/cast/_utils/hub';
 import {
   AttestationData,
   AttestationResponse,
+  decodeData,
   getAttestation,
 } from 'app/api/sign-protocol/_utils/sign-protocol';
 import { NextResponse } from 'next/server';
@@ -26,7 +27,7 @@ function urlWrapper(url: string) {
 
 export async function getFrame0(id: string) {
   const attestation: AttestationResponse = await getAttestation(id);
-  const attestation_data: AttestationData = JSON.parse(attestation.data);
+  const attestation_data: AttestationData = decodeData(attestation);
   const attester = (await getFnameByFid(attestation_data.attesterFID)).transfers[0].username;
 
   return new NextResponse(
@@ -64,7 +65,7 @@ export async function getFrame0(id: string) {
 
 export async function getFrame1(id: string) {
   const attestation: AttestationResponse = await getAttestation(id);
-  const attestationData: AttestationData = JSON.parse(attestation.data);
+  const attestationData: AttestationData = decodeData(attestation);
 
   return new NextResponse(
     getFrameHtmlResponse({
@@ -101,7 +102,7 @@ export async function getFrame1(id: string) {
 
 export async function getFrame2(id: string) {
   const attestation: AttestationResponse = await getAttestation(id);
-  const attestationData: AttestationData = JSON.parse(attestation.data);
+  const attestationData: AttestationData = decodeData(attestation);
 
   return new NextResponse(
     getFrameHtmlResponse({
@@ -134,7 +135,7 @@ export async function getFrame2(id: string) {
 
 export async function getFrame3(id: string) {
   const attestation: AttestationResponse = await getAttestation(id);
-  const attestationData: AttestationData = JSON.parse(attestation.data);
+  const attestationData: AttestationData = decodeData(attestation);
 
   return new NextResponse(
     getFrameHtmlResponse({

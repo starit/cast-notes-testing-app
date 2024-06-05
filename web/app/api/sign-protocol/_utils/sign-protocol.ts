@@ -9,6 +9,7 @@ import {
   OffChainRpc,
   Attestation,
 } from '@ethsign/sp-sdk';
+import { decodeAbiParameters } from 'viem'
 
 // import { privateKeyToAccount } from "viem/accounts";
 
@@ -59,4 +60,20 @@ export async function getAttestation(id: string) {
   const res = await indexService.queryAttestation(id);
   console.log('[attestation]', res);
   return res;
+}
+
+export function decodeData(data) {
+  const res = decodeAbiParameters(data.schema.data, data.data as `0x${string}`);
+  return {
+    castURL: res[0],
+    castHash: res[1],
+    castAuthorFID: res[2],
+    attesterFID: res[3],
+    isFactCheck: res[4],
+    context: res[5],
+    reference1: res[6],
+    reference2: res[7],
+    reference3: res[8],
+    reference4: res[9],
+  } as AttestationData;
 }
