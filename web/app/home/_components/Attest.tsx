@@ -141,7 +141,7 @@ export default function Attest(props: any) {
       });
       console.log('attest result', result);
       setDisabled(false);
-      setAttestResult(result.attestationId);
+      setAttestResult('onchain_evm_8453_' + result.attestationId);
       setHiddenResult(false);
       // return result
     } catch (e) {
@@ -161,7 +161,6 @@ export default function Attest(props: any) {
     reference3,
     reference4,
   ]);
-
 
   if (!props.cast) {
     return null;
@@ -256,7 +255,7 @@ export default function Attest(props: any) {
           </a>
         </p>
         <p>
-          Share to
+          Share to{' '}
           <a target="_blank" href={getWarpcastShareUrl(attestResult)}>
             Warpcast
           </a>

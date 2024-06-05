@@ -8,6 +8,7 @@ import { getCast } from 'app/api/farcaster/cast/_utils/hub';
 import {
   AttestationData,
   AttestationResponse,
+  decodeData,
   getAttestation,
 } from 'app/api/sign-protocol/_utils/sign-protocol';
 import { NextRequest, NextResponse } from 'next/server';
@@ -34,15 +35,14 @@ async function getTitle(url: string) {
 
 async function getNode(id: string, page: number) {
   const attestation: AttestationResponse = await getAttestation(id);
-  const attestation_data: AttestationData = JSON.parse(attestation.data);
-
-  const cast = (await getCast(attestation_data.castAuthorFID, attestation_data.castHash)).data
-    .castAddBody.text;
-  const author = (await getFnameByFid(attestation_data.castAuthorFID)).transfers[0].username;
-  const attester = (await getFnameByFid(attestation_data.attesterFID)).transfers[0].username;
+  const attestation_data: AttestationData = decodeData(attestation);
 
   switch (page) {
     case 0:
+      const cast = (await getCast(attestation_data.castAuthorFID, attestation_data.castHash)).data
+        .castAddBody.text;
+      const author = (await getFnameByFid(attestation_data.castAuthorFID)).transfers[0].username;
+      const attester = (await getFnameByFid(attestation_data.attesterFID)).transfers[0].username;
       return (
         <div
           style={{
@@ -187,8 +187,10 @@ export async function GET(
   try {
     const id: string = params.id;
     const page: number = parseInt(params.page);
-
-    const svg = await satori(await getNode(id, page), {
+    console.log(1);
+    const node=await getNode(id, page);
+    console.log("Get Node Done");
+    const svg = await satori(node, {
       width: 600,
       height: 600,
       fonts: [
@@ -200,8 +202,10 @@ export async function GET(
         },
       ],
     });
+    console.log(2);
     // Convert SVG to PNG using Sharp
     const pngBuffer = await sharp(Buffer.from(svg)).toFormat('png').toBuffer();
+    console.log(3);
 
     // Set the content type to PNG and send the response
     return new Response(pngBuffer, {
