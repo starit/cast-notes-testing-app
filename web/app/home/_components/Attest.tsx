@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
 /* eslint-disable react-perf/jsx-no-new-function-as-prop */
 /* eslint-disable react/jsx-no-useless-fragment */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
@@ -12,13 +13,23 @@ import {
   EvmChains,
   OffChainSignType,
   OffChainRpc,
+  delegateSignAttestation,
 } from '@ethsign/sp-sdk';
 // import InputCheckbox from 'app/home/_components/InputCheckbox';
 import InputText from 'app/home/_components/InputText';
+import axios from 'axios';
 import { FarcasterEmbed } from 'react-farcaster-embed/dist/client';
 import { useAccount } from 'wagmi';
 import Button from '@/components/Button/Button';
 import InputRadiobox from './InputRadiobox';
+
+function getFrameUrl(attestId: string) {
+  return `${process.env.NEXT_PUBLIC_WEBSITE_URL}/api/frame/` + attestId + '/0';
+}
+
+function getWarpcastShareUrl(attestId: string) {
+  return `https://warpcast.com/~/compose?embeds[]=${getFrameUrl(attestId)}`;
+}
 
 export default function Attest(props: any) {
   const [comment, setComment] = useState('');
@@ -101,6 +112,7 @@ export default function Attest(props: any) {
     reference4,
   ]);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const attestOnChain = useCallback(async () => {
     if (!isConnected || !address) {
       setError('Please connect to the wallet first');
@@ -114,6 +126,7 @@ export default function Attest(props: any) {
     setDisabled(true);
     setError(''); // Clear previous errors
     const client = new SignProtocolClient(SpMode.OnChain, {
+      // chain: EvmChains.sepolia, //testnet
       chain: EvmChains.base,
     });
     const schemaId = `${process.env.NEXT_PUBLIC_SIGN_PROTOCOL_BASE_SCHEMA_ID_FARCASTER}`;
@@ -149,6 +162,93 @@ export default function Attest(props: any) {
       setError('An error occurred while creating the attestation. Please try again.'); // Set error message
       console.error(e);
       // return
+    }
+  }, [
+    isConnected,
+    address,
+    props,
+    isFactCheck,
+    comment,
+    reference1,
+    reference2,
+    reference3,
+    reference4,
+  ]);
+  
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const attestViaBackend = useCallback(async () => {
+    if (!isConnected || !address) {
+      setError('Please connect to the wallet first');
+      return;
+    }
+    console.log('props', props);
+    if (!props.isAuthenticated || !props.profile.fid) {
+      setError('Please login to farcaster first');
+      return;
+    }
+    setDisabled(true);
+    setError(''); // Clear previous errors
+    const schemaId = `${process.env.NEXT_PUBLIC_SIGN_PROTOCOL_BASE_SCHEMA_ID_FARCASTER}`;
+    console.log('schemaId', schemaId);
+
+    // generate user signed  attestation
+    let info
+    const data = {
+      castURL: props.castURL,
+      castHash: props.castHash,
+      castAuthorFID: props.castFID as number,
+      attesterFID: props.profile.fid as number,
+      isFactCheck, // bool
+      context: comment,
+      reference1,
+      reference2,
+      reference3,
+      reference4,
+    };
+    try {
+      // get the signature from the user:
+      // delegation create attestation
+      info = await delegateSignAttestation(
+        {
+          schemaId,
+          data,
+          indexingValue: 'xxx',
+        },
+        {
+          chain: EvmChains.base
+        }
+      );
+      console.log('delegateSignAttestation info', info) // signed info
+    } catch(e) {
+      setDisabled(false);
+      setError('An error occurred while run delegateSignAttestation. Please try again.'); // Set error message
+      console.error(e);
+    }
+    
+    // send user signed attestation to the back-end
+    try {
+      const response = await axios.post('/api/sign-protocol/attestation', {
+        info,
+      });
+      setDisabled(false);
+      console.log('response', response)
+      if (response.status === 200) {
+        console.log('response.data.attestation.attestationId', response.data.attestation.attestationId)
+        const baseMainnetPrefix = 'onchain_evm_8453_'
+        setAttestResult(`${baseMainnetPrefix}${response.data.attestation.attestationId}` ); // for mainnet
+        setHiddenResult(false);
+      } else {
+        // Error
+        setError(`An error occurred while creating the attestation. Please try again. Response Status: ${response.status}`); // Set error message
+        console.error('error response', response);
+        // return
+      }
+      return
+    } catch (e) {
+      setDisabled(false);
+      setError(`An error occurred while trying to get Casts By Mention. Please try again. ${e?.toString()} | error: ${e?.response?.data.error}`); // Set error message
+      console.error(e);
+      return
     }
   }, [
     isConnected,
@@ -233,7 +333,7 @@ export default function Attest(props: any) {
       />
       <Button
         buttonContent={disabled ? 'Attesting' : 'Attest'}
-        onClick={() => attestOnChain()}
+        onClick={() => attestViaBackend()}
         disabled={disabled}
       />
       <div hidden={hiddenResult}>
@@ -264,12 +364,4 @@ export default function Attest(props: any) {
       {error && <p className="text-red-500">{error}</p>} {/* Display error messages */}
     </div>
   );
-}
-
-function getFrameUrl(attestId: string) {
-  return `${process.env.NEXT_PUBLIC_WEBSITE_URL}/api/frame/` + attestId + '/0';
-}
-
-function getWarpcastShareUrl(attestId: string) {
-  return `https://warpcast.com/~/compose?embeds[]=${getFrameUrl(attestId)}`;
 }

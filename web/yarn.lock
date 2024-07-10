@@ -2159,16 +2159,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ethsign/sp-sdk@npm:^0.3.30":
-  version: 0.3.30
-  resolution: "@ethsign/sp-sdk@npm:0.3.30"
+"@ethsign/sp-sdk@npm:^0.5.2":
+  version: 0.5.2
+  resolution: "@ethsign/sp-sdk@npm:0.5.2"
   dependencies:
     ethers: "npm:^6.10.0"
     query-string: "npm:^9.0.0"
     tslib: "npm:^2.6.2"
   peerDependencies:
     viem: ">=2.0.0"
-  checksum: 10c0/dd6a76ad6ef6a6dc6520cd1a3fb77ea1bb58c0925f46b17a6b662687d36f9f88d8f73c7490b34c3d46d39104320ba9f82b1eaf959a469e8b04507fe496d971af
+  checksum: 10c0/f2a7b389615de232703b83dd507d03d8ffb2b3ee921a6967cc4b196e9da8101bd625ac4ca2a8b063461068cdc451dd82081b9ca35fb5860d8cc9c5bd8de44fe3
   languageName: node
   linkType: hard
 
@@ -2185,9 +2185,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@farcaster/auth-kit@npm:^0.2.2":
-  version: 0.2.2
-  resolution: "@farcaster/auth-kit@npm:0.2.2"
+"@farcaster/auth-kit@npm:^0.3.1":
+  version: 0.3.1
+  resolution: "@farcaster/auth-kit@npm:0.3.1"
   dependencies:
     "@farcaster/auth-client": "npm:^0.1.1"
     "@vanilla-extract/css": "npm:^1.14.0"
@@ -2197,7 +2197,7 @@ __metadata:
   peerDependencies:
     react: ">= 17"
     react-dom: ">= 17"
-  checksum: 10c0/453ebf8cfea39793d18f5709cf742f88d66110a0100fe4d7c05ebf881534a2d798b6ea88d7c1d9afc1eafb02f128443776cc6fbba7bc99b2d6c6b825fc2b9130
+  checksum: 10c0/44bae4740e4794037c1c7be2eabfb82e2e7559bcf04ef29c3805a23c01e52855950c8f87a1c02fe5a804bb8587c8393c294a8a8b95ec549b2d2550d0912cf7d4
   languageName: node
   linkType: hard
 
@@ -7239,8 +7239,8 @@ __metadata:
     "@babel/preset-typescript": "npm:^7.23.3"
     "@coinbase/onchainkit": "npm:0.10.0"
     "@coinbase/wallet-sdk": "npm:^3.9.1"
-    "@ethsign/sp-sdk": "npm:^0.3.30"
-    "@farcaster/auth-kit": "npm:^0.2.2"
+    "@ethsign/sp-sdk": "npm:^0.5.2"
+    "@farcaster/auth-kit": "npm:^0.3.1"
     "@farcaster/hub-nodejs": "npm:^0.11.8"
     "@jest/globals": "npm:^29.7.0"
     "@neynar/nodejs-sdk": "npm:^1.16.1"
