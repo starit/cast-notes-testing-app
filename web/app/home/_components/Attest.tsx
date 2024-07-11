@@ -17,7 +17,7 @@ import {
 } from '@ethsign/sp-sdk';
 // import InputCheckbox from 'app/home/_components/InputCheckbox';
 import InputText from 'app/home/_components/InputText';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { FarcasterEmbed } from 'react-farcaster-embed/dist/client';
 import { useAccount } from 'wagmi';
 import Button from '@/components/Button/Button';
@@ -246,21 +246,17 @@ export default function Attest(props: any) {
       return
     } catch (e) {
       setDisabled(false);
-      setError(`An error occurred while trying to get Casts By Mention. Please try again. ${e?.toString()} | error: ${e?.response?.data.error}`); // Set error message
+      if (axios.isAxiosError(error)) {
+        const err = error as AxiosError
+        setError(`An error occurred while trying to attest. Please try again. ${e?.toString()} | error: ${err.response?.data}`); // Set error message
+        
+      } else {
+        setError(`An error occurred while trying to attest. Please check the blockchain explorer to see if the attestation has been posted.`); // Set error message
+      }
       console.error(e);
       return
     }
-  }, [
-    isConnected,
-    address,
-    props,
-    isFactCheck,
-    comment,
-    reference1,
-    reference2,
-    reference3,
-    reference4,
-  ]);
+  }, [isConnected, address, props, isFactCheck, comment, reference1, reference2, reference3, reference4, error]);
 
   if (!props.cast) {
     return null;
