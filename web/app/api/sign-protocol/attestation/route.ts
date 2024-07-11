@@ -35,8 +35,8 @@ import * as signProtocol from '../_utils/sign-protocol'
 
 const verifyAttesterFID = async (attesterFID: number, attester: string) => {
     const userAddress = await getFarcasterUserAddress(attesterFID);
-    console.log('[getFarcasterUserAddress] fid:', attesterFID, 'user address:', userAddress )
-    return userAddress === attester;
+    console.log('[getFarcasterUserAddress] fid:', attesterFID, 'user address:', userAddress?.verifiedAddresses)
+    return userAddress?.verifiedAddresses?.includes(attester);
 }
 
 /**

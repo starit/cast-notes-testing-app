@@ -62,7 +62,7 @@ export default function Attest(props: any) {
     const client = new SignProtocolClient(SpMode.OffChain, {
       signType: OffChainSignType.EvmEip712,
       // signType: OffChainSignType["evm-eip712"],
-      rpcUrl: OffChainRpc.testnet,
+      rpcUrl: OffChainRpc.mainnet,
       // account: props.account
       // account: privateKeyToAccount(privateKey), // optional
     });
