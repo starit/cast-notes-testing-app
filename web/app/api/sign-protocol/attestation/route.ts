@@ -35,8 +35,8 @@ import * as signProtocol from '../_utils/sign-protocol'
 
 const verifyAttesterFID = async (attesterFID: number, attester: string) => {
     const userAddress = await getFarcasterUserAddress(attesterFID);
-    console.log('[getFarcasterUserAddress] fid:', attesterFID, 'user address:', userAddress?.verifiedAddresses)
-    return userAddress?.verifiedAddresses?.includes(attester);
+    console.log('[getFarcasterUserAddress] fid:', attesterFID, 'user address:', userAddress?.verifiedAddresses, 'attester', attester)
+    return userAddress?.verifiedAddresses?.includes(attester.toLowerCase());
 }
 
 /**
@@ -88,7 +88,7 @@ export async function POST(req: NextRequest): Promise<Response> {
         // console.log('compare fid and address:', decodedData.attesterFID, info.attestation.attester)
         const fidVerifiedResult = await verifyAttesterFID(decodedData.attesterFID, info.attestation.attester);
         if (!fidVerifiedResult) {
-            console.error('failed to verify fid', 'fid:', decodedData.attesterFID, 'attester:', info.attestation.attester)
+            console.error('failed to verify fid', 'fid:', decodedData.attesterFID, 'attester:', info.attestation.attester, 'fidVerifiedResult', fidVerifiedResult)
             return NextResponse.json({ error: 'attester_fid is required to be from attester' }, { status: 400 });
         }
         // Todo:: verify signature and fid, important
